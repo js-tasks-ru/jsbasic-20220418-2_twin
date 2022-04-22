@@ -1,11 +1,8 @@
 function sumSalary(salaries) {
   let result = 0;
   for (let key in salaries) {
-    if (typeof salaries[key] === "number" && 
-        Math.abs(salaries[key]) >= 0 &&
-        Math.abs(salaries[key]) !== Infinity) {
-      result += salaries[key];
-    }
+    const item = salaries[key];
+    result += typeof item === 'number' && Number.isFinite(item) ? item : 0;
   }
   return result;
 }
