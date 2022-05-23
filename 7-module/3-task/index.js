@@ -45,12 +45,14 @@ export default class StepSlider {
 
       spans.forEach(span => span.classList.remove('slider__step-active'));
       spans[value + 1].classList.add('slider__step-active');
+    });
 
+    this.#elem.onclick = () => {
       this.#elem.querySelector('.slider').dispatchEvent(new CustomEvent('slider-change', {
-        detail: this.value,
+        detail: this.value + 1,
         bubbles: true
       }));
-    });
+    };
   }
 
   #render() {
