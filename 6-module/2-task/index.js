@@ -33,7 +33,7 @@ export default class ProductCard {
       bubbles: true
     });
     
-    document.addEventListener("product-add", (e) => console.log(e));
+    this.elem.addEventListener("product-add", (e) => console.log(e));
 
     this.button.dispatchEvent(event);
   }

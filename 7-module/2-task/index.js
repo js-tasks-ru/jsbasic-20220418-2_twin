@@ -1,7 +1,7 @@
 import createElement from '../../assets/lib/create-element.js';
 
 export default class Modal {
-  #modal = null;
+  // #modal = null;
   #modalTemplate = `
     <div class="modal">
       <!--Прозрачная подложка перекрывающая интерфейс-->
@@ -33,9 +33,9 @@ export default class Modal {
   }
 
   #render() {
+    this.elem = createElement(this.#modalTemplate);
     const modal = document.body.querySelector('.modal');
-    this.#modal = createElement(this.#modalTemplate);
-    const button = this.#modal.querySelector('.modal__close');
+    const button = this.elem.querySelector('.modal__close');
     button.addEventListener('click', this.close);
 
     const listener = (event) => {
@@ -52,12 +52,12 @@ export default class Modal {
   }
 
   open() {
-    document.body.append(this.#modal);
+    document.body.append(this.elem);
     document.body.classList.add('is-modal-open');
   }
 
   setTitle(title) {
-    document.querySelector('.modal__title').innerHTML = title;
+    document.querySelector('.modal__title').textContent = title;
   }
 
   setBody(body) {
