@@ -38,42 +38,30 @@ export default class CartIcon {
     window.addEventListener('resize', () => this.updatePosition());
   }
 
-  updatePosition() {
-    
-    let initialTopCoord = this.elem.getBoundingClientRect().top + window.pageYOffset;
-    
-    if (this.elem.offsetWidth) {
-      if (window.pageYOffset > initialTopCoord) {
-        let leftIndent = Math.min(
-          document.querySelector('.container').getBoundingClientRect().right + 20,
-          document.documentElement.clientWidth - this.elem.offsetWidth - 10) + 'px';
-          
-        Object.assign(this.elem.style, {
-          position: 'fixed',
-          top: '50px',
-          zIndex: 1e3,
-          right: '10px',
-          left: leftIndent
-        });
-        
-      } else {
-        Object.assign(this.elem.style, {
-          position: 'fixed',
-          top: '',
-          left: '',
-          zIndex: ''
-        });
-      }
-    }
-    let isMobile = document.documentElement.clientWidth <= 767;
-    
-    if (isMobile) {
-      Object.assign(this.elem.style, {
-        position: '',
-        top: '',
-        left: '',
-        zIndex: ''
-      });
-    }
+  updatePosition = () => {
+    this.elem.offsetHeight && 
+    (this.initialTopCoord || (this.initialTopCoord = this.elem.getBoundingClientRect().top + window.pageYOffset),
+    document.documentElement.clientWidth <= 767
+    ? this.resetPosition()
+    : window.pageYOffset > this.initialTopCoord ? this.fixedPosition() : this.resetPosition());
+  }
+  
+  fixedPosition() {
+    Object.assign(this.elem.style, {
+      position: "fixed",
+      top: "50px",
+      zIndex: 1e3,
+      left: Math.min(document.querySelector(".container").getBoundingClientRect().right + 20,
+        document.documentElement.clientWidth - this.elem.offsetWidth - 10) + "px"
+    });
+  }
+
+  resetPosition() {
+    Object.assign(this.elem.style, {
+      position: "",
+      top: "",
+      left: "",
+      zIndex: ""
+    });
   }
 }
