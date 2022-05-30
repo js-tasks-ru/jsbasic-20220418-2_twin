@@ -46,24 +46,25 @@ export default class RibbonMenu {
   }
 
   #addEventListeners() {
-    this.#elem.onclick = ({ target }) => {
-      const link = target.closest('.ribbon__item');
+    this.#elem.onclick = (event) => {
+      event.preventDefault();
+      const link = event.target.closest('.ribbon__item');
       if (link) {
         this.#elem.dispatchEvent(new CustomEvent(
           'ribbon-select', {
-            detail: target.closest('[data-id]').dataset.id,
+            detail: event.target.closest('[data-id]').dataset.id,
             bubbles: true
           }
         ));
         return;
       }
 
-      if (target.closest('.ribbon__arrow_left')) {
+      if (event.target.closest('.ribbon__arrow_left')) {
         this.#hideArrows();
         document.querySelector('.ribbon__inner').scrollBy(-350, 0);
       }
 
-      if (target.closest('.ribbon__arrow_right')) {
+      if (event.target.closest('.ribbon__arrow_right')) {
         document.querySelector('.ribbon__inner').scrollBy(350, 0);
         this.#hideArrows();
       }
